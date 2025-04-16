@@ -1,0 +1,78 @@
+nombre=input("Ingrese su nombre: ")
+rut=input("Ingrese su RUT: ")
+bolcliente="139232"
+perfumes=[]
+
+def mostrar_menu():
+    print("\n--- MENÚ ---")
+    print("1. Agregar perfume\n2. Ver lista de perfumes\n3. Modificar perfume\n4. Eliminar perfume\n5. Salir")
+
+def agregar_perfume():
+    print("Mujer: Aqueteatrapo, Noche, organza, hugored, Amazon,")
+    print("Hombre: Lacost, Hugoboss, Python, Javasex, C++")
+    nombre_perfume=input("Nombre del perfume: ")
+    volumen=input("Volumen (50 o 100 ml): ")
+    if volumen=="50": precio= 10000
+    elif volumen=="100": precio= 18000
+    else:
+        print("Volumen inválido."); return
+    perfumes.append({"nombre":nombre_perfume,"volumen":volumen,"precio":precio})
+    print("Perfume agregado.")
+
+def ver_perfumes():
+    if not perfumes:
+        print("No hay perfumes en la lista."); return
+    for i,perfume in enumerate(perfumes):
+        print(f"{i+1}. {perfume['nombre']} - {perfume['volumen']} ml - ${perfume['precio']}")
+
+def modificar_perfume():
+    ver_perfumes()
+    index=int(input("Número del perfume a modificar: "))-1
+    if 0<=index<len(perfumes):
+        nuevo_nombre=input("Nuevo nombre: ")
+        nuevo_volumen=input("Nuevo volumen (50  o 100 ml): ")
+        if nuevo_volumen=="50": nuevo_precio=10000
+        elif nuevo_volumen=="100": nuevo_precio=18000
+        else:
+            print("Volumen inválido."); return
+        perfumes[index]={"nombre":nuevo_nombre,"volumen":nuevo_volumen,"precio":nuevo_precio}
+        print("Perfume modificado.")
+    else: print("Número inválido.")
+
+def eliminar_perfume():
+    ver_perfumes()
+    index=int(input("Número del perfume a eliminar: "))-1
+    if 0<=index<len(perfumes):
+        perfumes.pop(index); print("Perfume eliminado.")
+    else: print("Número inválido.")
+
+def mostrar_detalle_compra():
+    print("\n--- DETALLE DE COMPRA ---")
+    print("Nombre cliente",nombre)
+    print("Rut cliente",rut)
+    print("N*boleta: ", bolcliente )
+    if not perfumes:
+        print("No se compraron perfumes.")
+    else:
+        total = 0
+        for perfume in perfumes:
+            print(f"{perfume['nombre']} - {perfume['volumen']} ml - ${perfume['precio']:,}")
+            total += perfume['precio']
+        iva = total * 0.19
+        print(f"Total: ${total:,}")
+        print(f"IVA: ${iva: 0f}")
+        print(f"Precio total: ${total + iva: 0f}")
+       
+print(f"\nBienvenido/a {nombre} (RUT: {rut}) - Cliente #{bolcliente}")
+while True:
+    mostrar_menu()
+    opcion=input("Elige una opción: ")
+    if opcion=="1": agregar_perfume()
+    elif opcion=="2": ver_perfumes()
+    elif opcion=="3": modificar_perfume()
+    elif opcion=="4": eliminar_perfume()
+    elif opcion=="5":
+        mostrar_detalle_compra()
+        print("¡Hasta luego!")
+        break
+    else: print("Opción inválida.")
